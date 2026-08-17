@@ -1,0 +1,32 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+      - run: cargo build --verbose
+      - run: cargo test --verbose
+      - run: cargo clippy --all-targets -- -D warnings
+
+  schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Lint our own MCP tool schema with skill-lint
+        run: |
+          cargo build --release
+          ./target/release/ctxgrep --tools --root . > tools.json
+          pip install --quiet git+https://github.com/0xNagato/skill-lint
+          skill-lint --mcp tools.json --fail-on warn

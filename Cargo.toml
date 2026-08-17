@@ -1,0 +1,21 @@
+[package]
+name = "ctxgrep"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+description = "Context-budgeted code search for AI agents. Ranked, deduplicated results that fit a token ceiling and never truncate silently. CLI and MCP server."
+repository = "https://github.com/0xNagato/ctxgrep"
+homepage = "https://github.com/0xNagato/ctxgrep"
+readme = "README.md"
+keywords = ["mcp", "grep", "search", "ai-agents", "llm"]
+categories = ["command-line-utilities", "development-tools"]
+
+[dependencies]
+ignore = "0.4.33"
+regex = "1.13.1"
+serde_json = "1.0.151"
+
+[profile.release]
+opt-level = 3
+lto = true
+strip = true
