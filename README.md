@@ -30,6 +30,12 @@ confidently wrong.
 cargo install --git https://github.com/0xNagato/ctxgrep
 ```
 
+## As an agent skill
+
+[`SKILL.md`](SKILL.md) tells an LLM agent (Claude, OpenClaw and others) when to
+reach for ctxgrep and what to do when matches were omitted. Copy it into your
+agent's skills folder; it expects `ctxgrep` on your `PATH`.
+
 ## As an MCP server
 
 ```jsonc
